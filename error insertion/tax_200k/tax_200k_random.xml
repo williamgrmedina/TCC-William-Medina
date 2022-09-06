@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE doc [
+  <!ENTITY err_percentage "0.5">
+]>
+
+
+<task>
+	<source>
+		<type>DBMS</type>
+		<access-configuration>
+			<driver>org.postgresql.Driver</driver>
+			<uri>jdbc:postgresql:bart_tax_&SIZE;</uri>
+			<schema>public</schema>
+			<login>postgres</login>
+			<password>postgres</password>
+		</access-configuration>
+	</source>
+	<target>
+		<type>DBMS</type>
+		<access-configuration>
+			<driver>org.postgresql.Driver</driver>
+			<uri>jdbc:postgresql:bart_tax_&SIZE;</uri>
+			<schema>target</schema>
+			<login>postgres</login>
+			<password>postgres</password>
+		</access-configuration>
+		<import createTables="true">
+			<input table="tax" type="xml">xml/&SIZE;_tax.xml</input>
+		</import>
+	</target>
+
+	<configuration>
+		<printLog>true</printLog>
+		<!-- To load DB only the first time and then generate a copy with changes -->
+		<recreateDBOnStart>false</recreateDBOnStart>
+		<applyCellChanges>true</applyCellChanges>
+		<!-- cloneTargetSchema>true</cloneTargetSchema><cloneSuffix>_dirty</cloneSuffix><useDeltaDBForChanges>true</useDeltaDBForChanges -->
+		<checkChanges>true</checkChanges>
+		<estimateRepairability>true</estimateRepairability>
+		<exportDirtyDB>true</exportDirtyDB>
+		<exportDirtyDBPath>bart_out/tax_&SIZE;/dirty_&err_percentage;/</exportDirtyDBPath><exportDirtyDBType>CSV</exportDirtyDBType>
+		<exportCellChanges>true</exportCellChanges>
+		<exportCellChangesPath>bart_out/tax_&SIZE;/dirty_&err_percentage;/cellChanges.csv</exportCellChangesPath>
+		
+		<randomErrors>
+			<tables>
+				<table name="tax">
+					<percentage>&err_percentage;</percentage>
+					<!-- Percentage is wrt attributes to dirty in the table -->
+					<attributes>
+						<attribute>fname</attribute>
+						<attribute>lname</attribute>
+						<attribute>gender</attribute>
+						<attribute>areacode</attribute>
+						<attribute>phone</attribute>
+						<attribute>city</attribute>
+						<attribute>state</attribute>
+						<attribute>zip</attribute>
+						<attribute>maritalstatus</attribute>
+						<attribute>haschild</attribute>
+						<attribute>salary</attribute>
+						<attribute>rate</attribute>
+						<attribute>singleexemp</attribute>
+						<attribute>marriedexemp</attribute>
+						<attribute>childexemp</attribute>
+					</attributes>
+				</table>
+			</tables>
+		</randomErrors>
+
+	</configuration>
+</task>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE doc [
+  <!ENTITY err_percentage "0.5">
+]>
+
+
+<task>
+  <source>
+    <type>DBMS</type>
+    <access-configuration>
+      <driver>org.postgresql.Driver</driver>
+      <uri>jdbc:postgresql:hospitals</uri>
+      <schema>target</schema>
+      <login>postgres</login>
+      <password>postgres</password>
+    </access-configuration>
+  </source>
+  <target>
+    <type>DBMS</type>
+    <access-configuration>
+      <driver>org.postgresql.Driver</driver>
+      <uri>jdbc:postgresql:hospitals</uri>
+      <schema>target</schema>
+      <login>postgres</login>
+      <password>postgres</password>
+    </access-configuration>
+  </target>
+
+  <configuration>
+    <printLog>true</printLog>
+    <checkChanges>true</checkChanges>
+    <recreateDBOnStart>false</recreateDBOnStart>
+    <applyCellChanges>true</applyCellChanges>
+    <estimateRepairability>true</estimateRepairability>
+    <useDeltaDBForChanges>true</useDeltaDBForChanges>
+    <cloneTargetSchema>true</cloneTargetSchema>
+    <cloneSuffix>_dirty</cloneSuffix>
+    <avoidInteractions>true</avoidInteractions>
+    <exportDirtyDB>true</exportDirtyDB>
+		<exportDirtyDBPath>hosp/</exportDirtyDBPath><exportDirtyDBType>CSV</exportDirtyDBType>
+		<exportCellChanges>true</exportCellChanges>
+		<exportCellChangesPath>hosp/cellChanges.csv</exportCellChangesPath>
+
+    <randomErrors>
+			<tables>
+				<table name="hospitals">
+					<percentage>&err_percentage;</percentage>
+					<!-- Percentage is wrt attributes to dirty in the table -->
+					<attributes>
+						<attribute>providernumber</attribute>
+						<attribute>hospitalname</attribute>
+						<attribute>address1</attribute>
+						<attribute>address2</attribute>
+						<attribute>address3</attribute>
+						<attribute>city</attribute>
+						<attribute>state</attribute>
+						<attribute>zipcode</attribute>
+						<attribute>countyname</attribute>
+            <attribute>phonenumber</attribute>
+            <attribute>hospitaltype</attribute>
+            <attribute>hospitalowner</attribute>
+            <attribute>emergencyservice</attribute>
+            <attribute>condition</attribute>
+            <attribute>measurecode</attribute>
+            <attribute>measurename</attribute>
+            <attribute>score</attribute>
+            <attribute>sample</attribute>
+            <attribute>stateavg</attribute>
+					</attributes>
+				</table>
+			</tables>
+		</randomErrors>
+
+  </configuration>
+</task>
+

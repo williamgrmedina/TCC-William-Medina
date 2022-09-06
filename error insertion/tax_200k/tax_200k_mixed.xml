@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE doc [
+	<!ENTITY SIZE "200k">
+	<!ENTITY err_percentage_dependencies "0.25">
+  	<!ENTITY err_percentage_random "0.25">
+  	<!ENTITY output "0.5">
+]>
+
+
+<task>
+	<source>
+		<type>DBMS</type>
+		<access-configuration>
+			<driver>org.postgresql.Driver</driver>
+			<uri>jdbc:postgresql:bart_tax_&SIZE;</uri>
+			<schema>public</schema>
+			<login>postgres</login>
+			<password>postgres</password>
+		</access-configuration>
+	</source>
+	<target>
+		<type>DBMS</type>
+		<access-configuration>
+			<driver>org.postgresql.Driver</driver>
+			<uri>jdbc:postgresql:bart_tax_&SIZE;</uri>
+			<schema>target</schema>
+			<login>postgres</login>
+			<password>postgres</password>
+		</access-configuration>
+	</target>
+
+<dependencies>
+		<![CDATA[
+DCs:
+//FD: not(t1.AreaCode=t2.AreaCode&t1.Phone=t2.Phone)
+fd1: tax(fname: $fname1,lname: $lname1 ,gender: $gender1 ,areacode: $areacode1 ,phone: $phone1 ,city: $city1 ,state: $state1 ,zip: $zip1 ,maritalstatus: $maritalstatus1 ,haschild: $haschild1 ,salary: $salary1 ,rate: $rate1 ,singleexemp: $singleexemp1 ,marriedexemp: $marriedexemp1 ,childexemp: $childexemp1), tax(fname: $fname2,lname: $lname2 ,gender: $gender2 ,areacode: $areacode2 ,phone: $phone2 ,city: $city2 ,state: $state2 ,zip: $zip2 ,maritalstatus: $maritalstatus2 ,haschild: $haschild2 ,salary: $salary2 ,rate: $rate2 ,singleexemp: $singleexemp2 ,marriedexemp: $marriedexemp2 ,childexemp: $childexemp2),
+    $areacode1 == $areacode2, $phone1 == $phone2 -> #fail.  
+    
+//FD: not(t1.City!=t2.City&t1.Zip=t2.Zip)
+fd2: tax(fname: $fname1,lname: $lname1 ,gender: $gender1 ,areacode: $areacode1 ,phone: $phone1 ,city: $city1 ,state: $state1 ,zip: $zip1 ,maritalstatus: $maritalstatus1 ,haschild: $haschild1 ,salary: $salary1 ,rate: $rate1 ,singleexemp: $singleexemp1 ,marriedexemp: $marriedexemp1 ,childexemp: $childexemp1), tax(fname: $fname2,lname: $lname2 ,gender: $gender2 ,areacode: $areacode2 ,phone: $phone2 ,city: $city2 ,state: $state2 ,zip: $zip2 ,maritalstatus: $maritalstatus2 ,haschild: $haschild2 ,salary: $salary2 ,rate: $rate2 ,singleexemp: $singleexemp2 ,marriedexemp: $marriedexemp2 ,childexemp: $childexemp2),
+    $zip1 == $zip2, $city1 != $city2 -> #fail.  
+
+//FD: not(t1.AreaCode=t2.AreaCode&t1.State!=t2.State)
+fd3: tax(fname: $fname1,lname: $lname1 ,gender: $gender1 ,areacode: $areacode1 ,phone: $phone1 ,city: $city1 ,state: $state1 ,zip: $zip1 ,maritalstatus: $maritalstatus1 ,haschild: $haschild1 ,salary: $salary1 ,rate: $rate1 ,singleexemp: $singleexemp1 ,marriedexemp: $marriedexemp1 ,childexemp: $childexemp1), tax(fname: $fname2,lname: $lname2 ,gender: $gender2 ,areacode: $areacode2 ,phone: $phone2 ,city: $city2 ,state: $state2 ,zip: $zip2 ,maritalstatus: $maritalstatus2 ,haschild: $haschild2 ,salary: $salary2 ,rate: $rate2 ,singleexemp: $singleexemp2 ,marriedexemp: $marriedexemp2 ,childexemp: $childexemp2),
+    $areacode1 == $areacode2, $state1 != $state2 -> #fail.  
+
+//FD: not(t1.State!=t2.State&t1.Zip=t2.Zip)
+fd4: tax(fname: $fname1,lname: $lname1 ,gender: $gender1 ,areacode: $areacode1 ,phone: $phone1 ,city: $city1 ,state: $state1 ,zip: $zip1 ,maritalstatus: $maritalstatus1 ,haschild: $haschild1 ,salary: $salary1 ,rate: $rate1 ,singleexemp: $singleexemp1 ,marriedexemp: $marriedexemp1 ,childexemp: $childexemp1), tax(fname: $fname2,lname: $lname2 ,gender: $gender2 ,areacode: $areacode2 ,phone: $phone2 ,city: $city2 ,state: $state2 ,zip: $zip2 ,maritalstatus: $maritalstatus2 ,haschild: $haschild2 ,salary: $salary2 ,rate: $rate2 ,singleexemp: $singleexemp2 ,marriedexemp: $marriedexemp2 ,childexemp: $childexemp2),
+    $zip1 == $zip2, $state1 != $state2 -> #fail.    
+
+//DC: not(t1.State=t2.State&t1.HasChild=t2.HasChild&t1.ChildExemp!=t2.ChildExemp)
+dc1: tax(fname: $fname1,lname: $lname1 ,gender: $gender1 ,areacode: $areacode1 ,phone: $phone1 ,city: $city1 ,state: $state1 ,zip: $zip1 ,maritalstatus: $maritalstatus1 ,haschild: $haschild1 ,salary: $salary1 ,rate: $rate1 ,singleexemp: $singleexemp1 ,marriedexemp: $marriedexemp1 ,childexemp: $childexemp1), tax(fname: $fname2,lname: $lname2 ,gender: $gender2 ,areacode: $areacode2 ,phone: $phone2 ,city: $city2 ,state: $state2 ,zip: $zip2 ,maritalstatus: $maritalstatus2 ,haschild: $haschild2 ,salary: $salary2 ,rate: $rate2 ,singleexemp: $singleexemp2 ,marriedexemp: $marriedexemp2 ,childexemp: $childexemp2),
+    $haschild1 == $haschild2, $state1 == $state2, $childexemp1 != $childexemp2 -> #fail.    
+    
+//DC: not(t1.State=t2.State&t1.HasChild=t2.HasChild&t1.ChildExemp!=t2.ChildExemp)
+dc2: tax(fname: $fname1,lname: $lname1 ,gender: $gender1 ,areacode: $areacode1 ,phone: $phone1 ,city: $city1 ,state: $state1 ,zip: $zip1 ,maritalstatus: $maritalstatus1 ,haschild: $haschild1 ,salary: $salary1 ,rate: $rate1 ,singleexemp: $singleexemp1 ,marriedexemp: $marriedexemp1 ,childexemp: $childexemp1), tax(fname: $fname2,lname: $lname2 ,gender: $gender2 ,areacode: $areacode2 ,phone: $phone2 ,city: $city2 ,state: $state2 ,zip: $zip2 ,maritalstatus: $maritalstatus2 ,haschild: $haschild2 ,salary: $salary2 ,rate: $rate2 ,singleexemp: $singleexemp2 ,marriedexemp: $marriedexemp2 ,childexemp: $childexemp2),
+    $maritalstatus1 == $maritalstatus2, $state1 == $state2, $singleexemp1 != $singleexemp2 -> #fail.    
+
+//DC: not(t1.State=t2.State&t1.Salary>t2.Salary&t1.Rate<t2.Rate)
+//dc3: tax(fname: $fname1,lname: $lname1 ,gender: $gender1 ,areacode: $areacode1 ,phone: $phone1 ,city: $city1 ,state: $state1 ,zip: $zip1 ,maritalstatus: $maritalstatus1 ,haschild: $haschild1 ,salary: $salary1 ,rate: $rate1 ,singleexemp: $singleexemp1 ,marriedexemp: $marriedexemp1 ,childexemp: $childexemp1), tax(fname: $fname2,lname: $lname2 ,gender: $gender2 ,areacode: $areacode2 ,phone: $phone2 ,city: $city2 ,state: $state2 ,zip: $zip2 ,maritalstatus: $maritalstatus2 ,haschild: $haschild2 ,salary: $salary2 ,rate: $rate2 ,singleexemp: $singleexemp2 ,marriedexemp: $marriedexemp2 ,childexemp: $childexemp2),
+//  $salary1 > $salary2, $state1 == $state2, $rate1 < $rate2 -> #fail.  
+
+]]>
+	</dependencies>
+
+	<configuration>
+		<printLog>true</printLog>
+		<!-- To load DB only the first time and then generate a copy with changes -->
+		<recreateDBOnStart>false</recreateDBOnStart>
+		<applyCellChanges>true</applyCellChanges>
+		<!-- cloneTargetSchema>true</cloneTargetSchema><cloneSuffix>_dirty</cloneSuffix><useDeltaDBForChanges>true</useDeltaDBForChanges -->
+		<checkChanges>true</checkChanges>
+		<estimateRepairability>true</estimateRepairability>
+		<exportDirtyDB>true</exportDirtyDB>
+		<exportDirtyDBPath>bart_out/tax_&SIZE;/dirty_&output;/</exportDirtyDBPath><exportDirtyDBType>CSV</exportDirtyDBType>
+		<exportCellChanges>true</exportCellChanges>
+		<exportCellChangesPath>bart_out/tax_&SIZE;/dirty_&output;/cellChanges.csv</exportCellChangesPath>
+		
+		<errorPercentages>
+			<defaultPercentage>0.0</defaultPercentage>
+			<vioGenQueries>
+				<!-- $areacode1 == $areacode2, $phone1 == $phone2 -->
+				<vioGenQuery id="fd1">
+					<comparison>(areacode1 == areacode2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<vioGenQuery id="fd1">
+					<comparison>(phone1 == phone2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<!-- $zip1 == $zip2, $city1 != $city2 -->
+				<vioGenQuery id="fd2">
+					<comparison>(city1 != city2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<vioGenQuery id="fd2">
+					<comparison>(zip1 == zip2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<!-- areacode1 == areacode2, state1 != state2 -->
+				<vioGenQuery id="fd3">
+					<comparison>(areacode1 == areacode2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<vioGenQuery id="fd3">
+					<comparison>(state1 != state2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<!-- $zip1 == $zip2, $state1 != $state2 -->
+				<vioGenQuery id="fd4">
+					<comparison>(state1 != state2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<vioGenQuery id="fd4">
+					<comparison>(zip1 == zip2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<!-- $haschild1 == $haschild2, $state1 == $state2, $childexemp1 != $childexemp2 -->
+				<vioGenQuery id="dc1">
+					<comparison>(childexemp1 != childexemp2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<vioGenQuery id="dc1">
+					<comparison>(state1 == state2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<vioGenQuery id="dc1">
+					<comparison>(haschild1 == haschild2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<!-- $maritalstatus1 == $maritalstatus2, $state1 == $state2, $singleexemp1 != $singleexemp2 -->
+				<vioGenQuery id="dc2">
+					<comparison>(singleexemp1 != singleexemp2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<vioGenQuery id="dc2">
+					<comparison>(state1 == state2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery>
+				<vioGenQuery id="dc2">
+					<comparison>(maritalstatus1 == maritalstatus2)</comparison>
+					<percentage>&err_percentage_dependencies;</percentage>
+				</vioGenQuery> 
+			</vioGenQueries>
+		</errorPercentages>
+
+		<randomErrors>
+			<tables>
+				<table name="tax">
+					<percentage>&err_percentage_random;</percentage>
+					<!-- Percentage is wrt attributes to dirty in the table -->
+					<attributes>
+						<attribute>fname</attribute>
+						<attribute>lname</attribute>
+						<attribute>gender</attribute>
+						<attribute>areacode</attribute>
+						<attribute>phone</attribute>
+						<attribute>city</attribute>
+						<attribute>state</attribute>
+						<attribute>zip</attribute>
+						<attribute>maritalstatus</attribute>
+						<attribute>haschild</attribute>
+						<attribute>salary</attribute>
+						<attribute>rate</attribute>
+						<attribute>singleexemp</attribute>
+						<attribute>marriedexemp</attribute>
+						<attribute>childexemp</attribute>
+					</attributes>
+				</table>
+			</tables>
+		</randomErrors>
+
+	</configuration>
+</task>
