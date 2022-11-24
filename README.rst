@@ -18,6 +18,8 @@ Para garantir bons resultados, um processo de correção e certificação de int
 
 O presente estudo engloba ferramentas mais relevantes e novidades do mercado sob um único ambiente de testes, trazendo um panorama sobre o estado do ramo de detecção de erros e identificando vantagens em soluções existentes, ao passo que também identifica problemas que necessitam contorno.
 
+O texto completo do TCC pode ser encontrado [aqui][https://github.com/williamgrmedina/TCC-William-Medina/blob/main/tcc.pdf] 
+
 Reprodutibilidade do estudo
 ===========================
 Para reproduzir os resultados obtidos pelo presente estudo, instale a ferramenta BART (https://github.com/dbunibas/BART) e altere as porcentagens de erros e os dados para acesso ao SGBD no script desejado (scripts estão presentes na pasta de inserção de erros deste projeto; inserção de erros padrão - meio porcento). A execução da ferramenta BART gerará como resultado um conjunto de dados sujo¹, que pode ser utilizado como entrada a qualquer uma das ferramentas² utilizadas no projeto.
