@@ -18,7 +18,8 @@ Para garantir bons resultados, um processo de correção e certificação de int
 
 O presente estudo engloba ferramentas mais relevantes e novidades do mercado sob um único ambiente de testes, trazendo um panorama sobre o estado do ramo de detecção de erros e identificando vantagens em soluções existentes, ao passo que também identifica problemas que necessitam contorno.
 
-O texto completo do TCC pode ser encontrado [aqui](https://github.com/williamgrmedina/TCC-William-Medina/blob/main/tcc.pdf)
+O texto completo do TCC pode ser encontrado 
+[aqui](https://github.com/williamgrmedina/TCC-William-Medina/blob/main/tcc.pdf)
 
 Reprodutibilidade do estudo
 ===========================
